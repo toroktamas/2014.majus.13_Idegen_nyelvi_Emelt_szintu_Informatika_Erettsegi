@@ -31,6 +31,7 @@ with open("verseny.txt", "rt",encoding="utf-8") as f:
             loves[n-1]["sor"] = sor
             loves[n-1]["hossza"] = len(sor)
             loves[n-1]["pont"] = int(loertek(sor))
+            loves[n-1]["sorszam"] = n-1
 #print(loves)
 """with open('sem.txt', 'wt',encoding="utf-8") as h:
     for g,v in loves.items():
@@ -94,27 +95,14 @@ for k, a in loves.items():
 
 #print("6. feladat")
 """Elo kell allitani a sorrend.txt--t."""
-n = 0
-pont = []
-szotar = {}
-elozo = int()
-for v in sorted(loves.values(), key=lambda v:v["pont"], reverse=True):
-        pont.append(v["pont"])
-#print(pont)
-for k,v in loves.items():
-    for h in range(0,len(pont)):
-            if pont[h] == v["pont"]:
-                if pont[h] != elozo:
-                    szotar[h+1] = {}
-                    szotar[h+1]["hany"] = k
-                    szotar[h+1]["pont"] = pont[h]
-                else:
-                    szotar[h] = {}
-                    szotar[h]["hany"] = k
-                    szotar[h]["pont"] = pont[h]
 
-            elozo = pont[h]
-#print(szotar)
-with open("sorrend.txt", "wt", encoding="utf-8") as g:
-    for j,f in szotar.items():
-        g.write("{0}\t{1}\t{2}\n".format(j,f["hany"],f["pont"]))
+helyezes = 0
+n = 0
+elozo_pontszam = 0
+with open("sorrend.txt", "wt", encoding="utf-8") as f:
+    for v in sorted(loves.values(), key=lambda v: v["pont"], reverse=True):
+        n += 1
+        if v["pont"] != elozo_pontszam:
+            helyezes = n
+        f.write("{0}\t{1}\t{2}\n".format(helyezes, v["sorszam"], v["pont"]))
+        elozo_pontszam = v["pont"]
